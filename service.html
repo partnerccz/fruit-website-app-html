@@ -6,15 +6,16 @@
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title></title>
 		<style>
-			body{
-				margin:0;
-				padding:0;
-				width:100%;
-				font-size:14px;
+			body {
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				font-size: 14px;
 			}
+			
 			.import-product {
-				width:100%;
-				margin:0 auto;
+				width: 100%;
+				margin: 0 auto;
 			}
 			
 			.import-product-list {
@@ -87,19 +88,19 @@
 				<div style="width:60%;margin:0 auto;"><img src="img/service_t1.png" width="100%" style="margin: 10px auto;" /></div>
 				<div class="import-product-list">
 					<dl>
-						<dt><img src="img/import/智利车厘子-z.jpg"></dt>
+						<dt><img src="img/loading.gif" data-original="img/import/智利车厘子-z.jpg"></dt>
 						<dd>智利车厘子</dd>
 					</dl>
 					<dl>
-						<dt><img src="img/import/进口蓝莓-z.jpg"></dt>
+						<dt><img src="img/loading.gif" data-original="img/import/进口蓝莓-z.jpg"></dt>
 						<dd>进口蓝莓</dd>
 					</dl>
 					<dl>
-						<dt><img src="img/import/哥伦比亚燕窝果-z.jpg"></dt>
+						<dt><img src="img/loading.gif" data-original="img/import/哥伦比亚燕窝果-z.jpg"></dt>
 						<dd>哥伦比亚燕窝果</dd>
 					</dl>
 					<dl>
-						<dt><img src="img/import/印尼山竹-z.jpg"></dt>
+						<dt><img src="img/loading.gif" data-original="img/import/印尼山竹-z.jpg"></dt>
 						<dd>印尼山竹</dd>
 					</dl>
 				</div>
@@ -109,24 +110,58 @@
 				<div style="width:60%;margin:0 auto;"><img src="img/service_t2.png" width="100%" /></div>
 				<div class="inland-product-list">
 					<dl>
-						<dt><img src="img/domestic/不知火丑橘-z.jpg"/></dt>
+						<dt><img src="img/loading.gif" data-original="img/domestic/不知火丑橘-z.jpg"/></dt>
 						<dd>不知火丑橘</dd>
 					</dl>
 					<dl>
-						<dt><img src="img/domestic/齐峰翠香猕猴桃-z.jpg"/></dt>
+						<dt><img src="img/loading.gif" data-original="img/domestic/齐峰翠香猕猴桃-z.jpg"/></dt>
 						<dd>齐峰翠香猕猴桃</dd>
 					</dl>
 					<dl>
-						<dt><img src="img/domestic/阿克苏苹果-z.jpg"/></dt>
+						<dt><img src="img/loading.gif" data-original="img/domestic/阿克苏苹果-z.jpg"/></dt>
 						<dd>阿克苏苹果</dd>
 					</dl>
 					<dl>
-						<dt><img src="img/domestic/冰糖木瓜-z.jpg"/></dt>
+						<dt><img src="img/loading.gif" data-original="img/domestic/冰糖木瓜-z.jpg"/></dt>
 						<dd>冰糖木瓜</dd>
 					</dl>
 				</div>
 			</div>
 		</div>
 	</body>
+	<script>
+		var aImages = document.images;
+		loadImg(aImages);
+		window.onscroll = function() {
+			loadImg(aImages);
+		};
+
+		function loadImg(arr) {
+			for(var i = 0, len = arr.length; i < len; i++) {
+				if(arr[i].getBoundingClientRect().top < document.documentElement.clientHeight && !arr[i].isLoad) {
+					arr[i].isLoad = true;
+					arr[i].style.cssText = "transition: ''; opacity: 0;"
+					if(arr[i].dataset) {
+						aftLoadImg(arr[i], arr[i].dataset.original);
+					} else {
+						aftLoadImg(arr[i], arr[i].getAttribute("data-original"));
+					}
+					(function(i) {
+						setTimeout(function() {
+							arr[i].style.cssText = "transition: 1s; opacity: 1;"
+						}, 16)
+					})(i);
+				}
+			}
+		}
+
+		function aftLoadImg(obj, url) {
+			var oImg = new Image();
+			oImg.onload = function() {
+				obj.src = oImg.src;
+			}
+			oImg.src = url;
+		}
+	</script>
 
 </html>

@@ -8,17 +8,18 @@
 		<!--
 		<link rel="import" href="home.html" id="home" />-->
 		<style>
-			body{
-				margin:0;
-				padding:0;
-				width:100%;
-				font-size:16px;
+			body {
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				font-size: 16px;
 				font-weight: 300;
 			}
+			
 			.about-home {
-				width:100%;
+				width: 100%;
 				text-align: left;
-				width:100%;
+				width: 100%;
 			}
 			
 			.about-bgi {
@@ -40,7 +41,7 @@
 			.about-content ul li {
 				list-style-type: none;
 				margin: 0px;
-				margin-left:-20px
+				margin-left: -20px
 			}
 			
 			.about-content ul li:nth-child(1) {
@@ -57,7 +58,7 @@
 
 	<body>
 		<div class="about-home">
-			<div class="about-bgi"><img src="img/map-z.jpg" /></div>
+			<div class="about-bgi"><img src="img/loading.gif" data-original="img/map-z.jpg" /></div>
 			<div class="about-content">
 				<ul>
 					<li>企业口号</li>
@@ -91,6 +92,38 @@
 		</div>
 	</body>
 	<script>
+		var aImages = document.images;
+		loadImg(aImages);
+		window.onscroll = function() {
+			loadImg(aImages);
+		};
+
+		function loadImg(arr) {
+			for(var i = 0, len = arr.length; i < len; i++) {
+				if(arr[i].getBoundingClientRect().top < document.documentElement.clientHeight && !arr[i].isLoad) {
+					arr[i].isLoad = true;
+					arr[i].style.cssText = "transition: ''; opacity: 0;"
+					if(arr[i].dataset) {
+						aftLoadImg(arr[i], arr[i].dataset.original);
+					} else {
+						aftLoadImg(arr[i], arr[i].getAttribute("data-original"));
+					}
+					(function(i) {
+						setTimeout(function() {
+							arr[i].style.cssText = "transition: 1s; opacity: 1;"
+						}, 16)
+					})(i);
+				}
+			}
+		}
+
+		function aftLoadImg(obj, url) {
+			var oImg = new Image();
+			oImg.onload = function() {
+				obj.src = oImg.src;
+			}
+			oImg.src = url;
+		}
 	</script>
 
 </html>
